@@ -28,7 +28,7 @@ To mount the components on an HTML page, use the following format
 
 ```html
   ...
-    <!-- This will mount "TodoApp" here --->
+    <!-- This will mount "TodoApp" here -->
     <script type="application/json" id="todo-app" data-component="TodoApp">
       {
         "todos": [
@@ -53,7 +53,7 @@ To get a reference to a mounted component you can use `getMountedComponent`.
 
 You can pass a prop to a component with a reference to another mounted component like this:
 ```html
-  <!-- Say this is a Notifications component with a .addNotification method... --->
+  <!-- Say this is a Notifications component with a .addNotification method... -->
   <script id="notification-widget" data-component="Notifications"></script>
 
   <!-- And we have a form which wants to send a notification -->

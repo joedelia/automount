@@ -24,6 +24,11 @@ module.exports = function (grunt) {
           ext: '.js'
         }]
       }
+    },
+    bump: {
+      options: {
+        pushTo: 'origin'
+      }
     }
   });
 
