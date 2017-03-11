@@ -40,6 +40,10 @@ function getRootNode(scriptNode) {
   return rootNode;
 }
 
+export function getMountedComponent(component) {
+  return mountedComponents[component];
+}
+
 export function mountAll(config = {}) {
   // Set defaults
   config = _.extend({
