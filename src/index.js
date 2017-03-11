@@ -16,19 +16,19 @@ function mount(component, props, rootNode, config) {
     parseProps(props, {camelCase: config.camelCase}),
     null
   );
-  ReactDOM.render(
+  return ReactDOM.render(
     element, rootNode
   );
-  return element;
 }
 
 function parseProps(props, {camelCase = true}) {
-  if (camelCase) props = toCamelCase(props);
-  return _.mapValues(props, (value, key, object) => {
+  props = _.mapValues(props, (value, key, object) => {
     if (_.isObject(value) && _.isEqual(_.keys(value), ['$component']))
       return () => mountedComponents[value.$component];
     return value;
   });
+  if (camelCase) props = toCamelCase(props);
+  return props;
 }
 
 function getRootNode(scriptNode) {
