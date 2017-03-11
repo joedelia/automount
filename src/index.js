@@ -61,7 +61,7 @@ export function mountAll(config = {}) {
 
     let props;
     try {
-      props = JSON.parse(script.innerHTML);
+      props = JSON.parse(script.innerHTML.trim());
     } catch (err) {
       props = {};
     }
