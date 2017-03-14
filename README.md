@@ -70,10 +70,14 @@ You can pass a prop to a component with a reference to another mounted component
 This will give `ContactForm` access to the `Notifications` component by calling
 `this.props.getNotifications()`.
 
-### Utils
-All props object keys will be deep-converted to camelCase to make it easy to output
-json from snake_case languages. This can be disabled like this:
-
+### Config
+To update the configuration of automount, use `_configure`.
 ```js
-  mountAll({camelCase: false});
+  import {_configure} from 'automount';
+  _configure({camelCase: false});
 ```
+The options are:
+- `camelCase` (defaults to `true`): This will reursively convert all prop keys to camel case.
+- `unmountRemovedComponents` (defaults to `true`): This will automatically unmount components removed from
+the document tree when `mountAll` is called. This is useful to automatically unmount components after an ajax request.
+- `defaultProps` (defaults to `{}`): Default props to pass to all components.

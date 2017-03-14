@@ -36,7 +36,9 @@
     "grunt-bump": "^0.8.0",
     "grunt-notify": "^0.4.5",
     "load-grunt-tasks": "^3.5.2",
-    "xo": "^0.17.1"
+    "xo": "^0.17.1",
+    "react": "15.x.x",
+    "react-dom": "15.x.x"
   },
   "xo": {
     "envs": [

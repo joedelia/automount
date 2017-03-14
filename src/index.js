@@ -4,7 +4,16 @@ import _ from 'lodash';
 import {toCamelCase} from 'case-converter';
 
 var components = {},
-  mountedComponents = {};
+  mountedComponents = {},
+  config = {
+    camelCase: true,
+    unmountRemovedComponents: true,
+    defaultProps: {}
+  };
+
+export function _configure(newConfig) {
+  _.extend(config, newConfig);
+}
 
 export function registerComponent(name, component) {
   components[name] = component;
@@ -13,7 +22,7 @@ export function registerComponent(name, component) {
 function mount(component, props, rootNode, config) {
   let element = React.createElement(
     component,
-    parseProps(props, {camelCase: config.camelCase}),
+    parseProps(_.extend({}, props, config.defaultProps), {camelCase: config.camelCase}),
     null
   );
   return ReactDOM.render(
@@ -44,11 +53,32 @@ export function getMountedComponent(component) {
   return mountedComponents[component];
 }
 
-export function mountAll(config = {}) {
+function inDocument(node) {
+  return document.contains(node);
+}
+
+function unmountComponent(component) {
+  ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(component).parentNode);
+}
+
+function isRemoved(component) {
+  return !inDocument(ReactDOM.findDOMNode(component).parentNode);
+}
+
+function unmountRemovedComponents() {
+  var previouslyMountedComponents = _.extend({}, mountedComponents);
+  for (let componentId in previouslyMountedComponents) {
+    if (!previouslyMountedComponents.hasOwnProperty(componentId)) continue;
+    if (isRemoved(previouslyMountedComponents[componentId])) {
+      unmountComponent(previouslyMountedComponents[componentId]);
+      delete previouslyMountedComponents[componentId];
+    }
+  }
+}
+
+export function mountAll() {
   // Set defaults
-  config = _.extend({
-    camelCase: true
-  }, config);
+  if (config.unmountRemovedComponents) unmountRemovedComponents();
 
   // Get all scripts
   let scripts = document.querySelectorAll('script[data-component]');
