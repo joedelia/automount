@@ -16,6 +16,10 @@ export function _configure(newConfig) {
 }
 
 export function registerComponent(name, component) {
+  if (typeof component === 'undefined' && typeof name === 'function') {
+    component = name;
+    name = component.name;
+  }
   components[name] = component;
 }
 

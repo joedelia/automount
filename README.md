@@ -17,7 +17,7 @@ To use automount, you'll need to register all the components you like to mount l
 import {registerComponent, mountAll} from 'automount';
 
 import ComponentName from './path/to/component';
-registerComponent('ComponentName', ComponentName);
+registerComponent(ComponentName);
 
 // Then, when page is loaded:
 mountAll();
