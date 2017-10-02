@@ -38,6 +38,8 @@ function parseProps(props, {camelCase = true}) {
   props = _.mapValues(props, (value, key, object) => {
     if (_.isObject(value) && _.isEqual(_.keys(value), ['$component']))
       return () => mountedComponents[value.$component];
+    if (_.isObject(value) && _.isEqual(_.keys(value), ['$window']))
+      return window[value.$window];
     return value;
   });
   if (camelCase) props = toCamelCase(props);
