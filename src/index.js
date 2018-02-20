@@ -51,6 +51,8 @@ function getRootNode(scriptNode) {
   if (rootNode) return rootNode;
   rootNode = document.createElement(scriptNode.dataset.rootType || 'div');
   rootNode.id = scriptNode.id + '-root';
+  if (scriptNode.dataset.rootClass)
+    rootNode.className = scriptNode.dataset.rootClass;
   scriptNode.parentNode.insertBefore(rootNode, scriptNode);
   return rootNode;
 }
