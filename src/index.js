@@ -49,7 +49,7 @@ function parseProps(props, {camelCase = true}) {
 function getRootNode(scriptNode) {
   let rootNode = document.getElementById(scriptNode.id + '-root');
   if (rootNode) return rootNode;
-  rootNode = document.createElement('div');
+  rootNode = document.createElement(scriptNode.dataset.rootType || 'div');
   rootNode.id = scriptNode.id + '-root';
   scriptNode.parentNode.insertBefore(rootNode, scriptNode);
   return rootNode;
