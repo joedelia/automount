@@ -124,5 +124,8 @@ export function mountAll() {
       root,
       config
     );
+
+    // Link to original script for external usage
+    script.__component = mountedComponents[script.id];
   }
 }
