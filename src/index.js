@@ -3,7 +3,7 @@ import React from 'react';
 import _ from 'lodash';
 import {toCamelCase} from 'case-converter';
 
-var components = {},
+const components = {},
   mountedComponents = {},
   config = {
     camelCase: true,
@@ -20,11 +20,12 @@ export function registerComponent(name, component) {
     component = name;
     name = component.name;
   }
+
   components[name] = component;
 }
 
 function mount(component, props, rootNode, config) {
-  let element = React.createElement(
+  const element = React.createElement(
     component,
     parseProps(_.extend({}, props, config.defaultProps), {camelCase: config.camelCase}),
     null
@@ -66,16 +67,21 @@ function inDocument(node) {
 }
 
 function unmountComponent(component) {
-  ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(component).parentNode);
+  const root = ReactDOM.findDOMNode(component);
+  if (root)
+    ReactDOM.unmountComponentAtNode(root.parentNode);
 }
 
 function isRemoved(component) {
-  return !inDocument(ReactDOM.findDOMNode(component).parentNode);
+  const root = ReactDOM.findDOMNode(component);
+  if (!root)
+    return true;
+  return !inDocument(root.parentNode);
 }
 
 function unmountRemovedComponents() {
-  var previouslyMountedComponents = _.extend({}, mountedComponents);
-  for (let componentId in previouslyMountedComponents) {
+  const previouslyMountedComponents = _.extend({}, mountedComponents);
+  for (const componentId in previouslyMountedComponents) {
     if (!previouslyMountedComponents.hasOwnProperty(componentId)) continue;
     if (isRemoved(previouslyMountedComponents[componentId])) {
       unmountComponent(previouslyMountedComponents[componentId]);
@@ -89,9 +95,9 @@ export function mountAll() {
   if (config.unmountRemovedComponents) unmountRemovedComponents();
 
   // Get all scripts
-  let scripts = document.querySelectorAll('script[data-component]');
+  const scripts = document.querySelectorAll('script[data-component]');
   for (let i = 0; i < scripts.length; i++) {
-    let script = scripts[i];
+    const script = scripts[i];
     // Ensure script has an id
     if (typeof script.id === 'undefined') {
       console.error('Auntomount scripts need to have an id');
@@ -108,12 +114,12 @@ export function mountAll() {
     }
 
     // Create root for element
-    let root = getRootNode(script);
+    const root = getRootNode(script);
 
     let props;
     try {
       props = JSON.parse(script.innerHTML.trim());
-    } catch (err) {
+    } catch (error) {
       props = {};
     }
 
