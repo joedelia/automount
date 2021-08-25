@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import _ from 'lodash';
-import {toCamelCase} from 'case-converter';
+import {toCamelCase} from './case-convert';
 
 const components = {},
   mountedComponents = {},
