@@ -1,6 +1,6 @@
 {
   "name": "automount",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "A simple framework to easily mount React components on a dynamic webpage",
   "main": "lib/index.js",
   "repository": {
